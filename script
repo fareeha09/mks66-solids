@@ -1,0 +1,36 @@
+#TREE PART
+push
+move
+100 250 0
+sphere
+50 0 0 50
+sphere
+100 0 0 50
+sphere
+150 0 0 50
+sphere
+200 0 0 50
+sphere
+250 0 0 50
+sphere
+100 50 0 50
+sphere
+200 50 0 50
+sphere
+130 100 0 50
+sphere
+170 100 0 50
+sphere
+150 150 0 50
+#BARK
+push
+move
+110 50 0 
+box
+0 0 0 80 200 50
+#BASE BUT NOT A DIFFERENT ELEMENT OF STACK
+box
+-80 -200 -50 250 100 50
+pop
+save
+robot.png
