@@ -32,5 +32,6 @@ box
 box
 -80 -200 -50 250 100 50
 pop
+display
 save
 robot.png
