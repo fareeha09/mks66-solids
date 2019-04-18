@@ -17,7 +17,7 @@ def scanline_convert(polygons, i, screen, zbuffer ):
     new = [(b[0], b[1], b[2]),(m[0], m[1], m[2]),(t[0], t[1], t[2])]
 	
     if (b[1]>t[1]):
-        new= [(t[0], t[1], t[2]),(b[0], b[1], b[2]),(m[0], m[1], m[2])]
+        new= [(t[0], t[1], t[2]),(m[0], m[1], m[2]),(b[0], b[1], b[2])]
 	      
     elif (b[1]>m[1]):
         new= [(m[0], m[1], m[2]),(b[0], b[1], b[2]),(t[0], t[1], t[2])]
@@ -35,43 +35,44 @@ def scanline_convert(polygons, i, screen, zbuffer ):
     yt= new[2][1]
     zt= new[2][2]
 	
-    x0=xb
-    x1=xb
-    z0=zb
-    z1=xb
-	
     dxtb = xt - xb
     dytb = yt - yb
     dztb = zt - zb
-    dxmb = xm - xb
-    dymb = ym - yb
-    dzmb = zm - zb
+    dxmb = xb - xm
+    dymb = yb - ym
+    dzmb = zb - zm
     dxtm = xt - xm
     dytm = yt - ym
     dztm = zt - zm
 	
 	#bottom triangle
+    x0=xb
+    x1=xb
+    z0=zb
+    z1=zb
     y=yb
     if (yb != ym and yt != yb):
-        while (y < ym):
-		    draw_line(int(x0), int(y), int(z0), int(x1), int(y), int(z1), screen, zbuffer, color)
-		    x0 += dxtb / dytb
-		    z0 += dztb / dytb
-		    x1 += dxmb / dymb
-		    z1 += dzmb / dymb
-		    y+=1
-		
+		while (y < ym):
+			draw_line(int(x0), int(y), int(z0), int(x1), int(y), int(z1), screen, zbuffer, color)
+			x0 += dxtb / dytb
+			x1 += dxmb / dymb
+			z0 += dztb / dytb
+			z1 += dzmb / dymb
+			y+=1
+			
     #top triangle
+    x1=xm
+    z1=zm
     y=ym
     if (yt != ym and yt != yb):	
-	    while (y < yt):
-		    draw_line(int(x0), int(y), int(z0), int(x1), int(y), int(z1), screen, zbuffer, color)
-		    x0 += dxtb / dytb
-		    z0 += dztb / dytb
-		    x1 += dxtm / dytm
-		    z1 += dztm / dytm
-		    y+=1
-		
+		while (y < yt):
+			y+=1
+			draw_line(int(x0), int(y), int(z0), int(x1), int(y), int(z1), screen, zbuffer, color)
+			x0 += dxtb / dytb
+			x1 += dxtm / dytm
+			z0 += dztb / dytb
+			z1 += dztm / dytm
+								
 def add_polygon( polygons, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
     add_point(polygons, x0, y0, z0)
     add_point(polygons, x1, y1, z1)
@@ -305,13 +306,17 @@ def draw_line( x0, y0, z0, x1, y1, z1, screen, zbuffer, color ):
     if x0 > x1:
         xt = x0
         yt = y0
+        zt = z0
         x0 = x1
         y0 = y1
+        z0 = z1
         x1 = xt
         y1 = yt
+        z1 = zt
 
     x = x0
     y = y0
+    z = z0
     A = 2 * (y1 - y0)
     B = -2 * (x1 - x0)
     wide = False
