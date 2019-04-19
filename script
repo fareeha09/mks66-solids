@@ -2,34 +2,36 @@
 push
 move
 100 250 0
-sphere
-50 0 70 50
-sphere
-100 0 70 50
-sphere
-150 0 70 50
-sphere
-200 0 70 50
-sphere
-250 0 70 50
-sphere
-100 50 70 50
-sphere
-200 50 70 50
-sphere
-130 100 70 50
-sphere
-170 100 70 50
-sphere
-150 150 70 50
+torus
+50 0 0 50 70
+torus
+100 0 0 50 70
+torus
+150 0 0 50 70
+torus
+200 0 0 50 70
+torus
+250 0 0 50 70
+torus
+100 50 0 50 70
+torus
+200 50 0 50 70
+torus
+130 100 0 50 70
+torus
+170 100 0 50 70
+torus
+150 150 0 50 70
 #BARK
 push
 move
-110 50 -20 
+110 50 0 
 box
-0 0 0 80 200 -50
+0 0 0 80 200 50
 #BASE BUT NOT A DIFFERENT ELEMENT OF STACK
 box
--80 -200 -50 250 100 0
+-80 -200 -50 250 100 50
 pop
 display
+save
+robot.png

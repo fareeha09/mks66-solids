@@ -4,10 +4,10 @@ from gmath import *
 import random
 
 def scanline_convert(polygons, i, screen, zbuffer ):
-    re=random.randint(0,255)
+    #re=random.randint(0,255)
     gr=random.randint(0,255)
     bl=random.randint(0,255)
-    color = [re,gr,bl]
+    color = [255,gr,bl]
 	
 	#compare their y-values
     b= polygons[i]
@@ -38,41 +38,45 @@ def scanline_convert(polygons, i, screen, zbuffer ):
     dxtb = xt - xb
     dytb = yt - yb
     dztb = zt - zb
-    dxmb = xb - xm
-    dymb = yb - ym
-    dzmb = zb - zm
+    dxmb = xm - xb
+    dymb = ym - yb
+    dzmb = zm - zb
     dxtm = xt - xm
     dytm = yt - ym
     dztm = zt - zm
+			
+    #top triangle
+    if (yt != ym and yt != yb):
+		x0=xt
+		x1=xt
+		z0=zt
+		z1=zt
+		y=yt	
+		while (y > ym):
+			draw_line(int(x0), int(y), int(z0), int(x1), int(y), int(z1), screen, zbuffer, color)
+			x0 -= dxtb / dytb
+			x1 -= dxtm / dytm
+			z0 -= dztb / dytb
+			z1 -= dztm / dytm
+			y-=1
+			#draw_line(int(x0), int(y), int(z0), int(x1), int(y), int(z1), screen, zbuffer, color)
 	
 	#bottom triangle
-    x0=xb
-    x1=xb
-    z0=zb
-    z1=zb
-    y=yb
     if (yb != ym and yt != yb):
+		x0=xb
+		x1=xb
+		z0=zb
+		z1=zb
+		y=yb
 		while (y < ym):
-			draw_line(int(x0), int(y), int(z0), int(x1), int(y), int(z1), screen, zbuffer, color)
+			# draw_line(int(x0), int(y), int(z0), int(x1), int(y), int(z1), screen, zbuffer, color)
 			x0 += dxtb / dytb
 			x1 += dxmb / dymb
 			z0 += dztb / dytb
 			z1 += dzmb / dymb
-			y+=1
+			y+=1	
+			draw_line(int(x0), int(y), int(z0), int(x1), int(y), int(z1), screen, zbuffer, color)	
 			
-    #top triangle
-    x1=xm
-    z1=zm
-    y=ym
-    if (yt != ym and yt != yb):	
-		while (y < yt):
-			y+=1
-			draw_line(int(x0), int(y), int(z0), int(x1), int(y), int(z1), screen, zbuffer, color)
-			x0 += dxtb / dytb
-			x1 += dxtm / dytm
-			z0 += dztb / dytb
-			z1 += dztm / dytm
-								
 def add_polygon( polygons, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
     add_point(polygons, x0, y0, z0)
     add_point(polygons, x1, y1, z1)
